@@ -7,13 +7,16 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "bootstrap": "4.6.2",
+    "gh-pages": "^4.0.0",
+    "popper.js": "1.16.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4",
-    "bootstrap": "4.6.2",
-    "popper.js": "1.16.1",
-    "gh-pages": "^4.0.0"
+    "web-vitals": "^2.1.4"
+  },
+  "devDependencies": {
+    "sass": "^1.54.9"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -29,12 +32,31 @@
       "react-app/jest"
     ],
     "rules": {
-      "semi": [1, "always"],
-      "react/jsx-curly-spacing": [ 1, "always" ],
-      "no-use-before-define": [ 0, { "functions": false } ],
-      "react/jsx-indent": [ 1, 2 ],
-      "space-in-parens": [ 1, "never" ],
-      "no-const-assign": [ 2 ]
+      "semi": [
+        1,
+        "always"
+      ],
+      "react/jsx-curly-spacing": [
+        1,
+        "always"
+      ],
+      "no-use-before-define": [
+        0,
+        {
+          "functions": false
+        }
+      ],
+      "react/jsx-indent": [
+        1,
+        2
+      ],
+      "space-in-parens": [
+        1,
+        "never"
+      ],
+      "no-const-assign": [
+        2
+      ]
     }
   },
   "browserslist": {
