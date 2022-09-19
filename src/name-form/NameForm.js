@@ -11,12 +11,12 @@ const NameForm = (props) => {
     userName: 'Kevin',
     userAge: 20,
     hasError: false,
-    errorMsg: ''
+    errorMsg: '',
+    submitDisabled: false
   });
 
   const actionHandler = (btnId) => {
     if (btnId === 'submit') {
-      console.log(userInfo);
       if (userInfo.userAge > 0 && userInfo.userName.trim() !== '') {
         setUserInfo((prevState) => {
           return {
@@ -24,6 +24,10 @@ const NameForm = (props) => {
             hasError: false,
             errorMsg: undefined
           };
+        });
+        props.onNameSubmit({
+          userName: userInfo.userName,
+          userAge: userInfo.userAge,
         });
       } else {
         setUserInfo((prevState) => {
@@ -46,9 +50,14 @@ const NameForm = (props) => {
 
   const inputChangeHandler = (input) => {
     setUserInfo((prevState) => {
-      return {
+      const state = {
         ...prevState,
-        ...input
+        ...input,
+      };
+      const disableBtn = state.userName && ((+state.userAge) > 0);
+      return {
+        ...state,
+        submitDisabled: !disableBtn
       };
     });
   };
@@ -59,7 +68,7 @@ const NameForm = (props) => {
       <Alert hasAlert={ userInfo.hasError } message={ userInfo.errorMsg }></Alert>
       <Name inputChange={ inputChangeHandler } nameValue={ userInfo.userName }></Name>
       <Age inputChange={ inputChangeHandler } ageValue={ userInfo.userAge }></Age>
-      <Submit actionClick={ actionHandler }></Submit>
+      <Submit actionClick={ actionHandler } disabled={ false }></Submit>
       <div className='text-muted'>
         { JSON.stringify(userInfo) }
       </div>
