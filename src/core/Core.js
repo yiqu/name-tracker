@@ -11,7 +11,7 @@ const Core = () => {
     const normalized = {
       userName: name.userName,
       userAge: +name.userAge,
-      id: Math.random()
+      id: Math.random().toString()
     };
     let names = [...nameState];
     names.unshift(normalized);
