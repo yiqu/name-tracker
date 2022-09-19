@@ -1,6 +1,9 @@
+import { useRef } from 'react';
 import styles from './Input.module.scss';
 
 const Input = (props) => {
+
+  const inputRef = useRef(undefined);
 
   const inputId = props.inputId;
   const inputName = props.inputName;
@@ -13,8 +16,9 @@ const Input = (props) => {
 
   return (
     <div className={ `form-group ${styles.input}` }>
-      <label htmlFor="userAge"> {inputName} </label>
-      <input type={ inputType } className="form-control" id={ inputId } onChange={ changeHandler } value={ inputValue }/>
+      <label htmlFor="userAge"> {inputName} </label> {inputRef.current?.value ? `(${inputRef.current?.value})` : ''}
+      <input type={ inputType } className="form-control" id={ inputId }
+        onChange={ changeHandler } value={ inputValue } ref={ inputRef }/>
     </div>
   );
 };

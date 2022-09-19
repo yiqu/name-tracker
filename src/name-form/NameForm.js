@@ -62,13 +62,24 @@ const NameForm = (props) => {
     });
   };
 
+  const alertClickHandler = () => {
+    setUserInfo((prevState) => {
+      return {
+        ...prevState,
+        hasError: false,
+      };
+    });
+  };
+
 
   return (
     <form className={ `${styles.main}` }>
-      <Alert hasAlert={ userInfo.hasError } message={ userInfo.errorMsg }></Alert>
+      { userInfo.hasError && <Alert message={ userInfo.errorMsg } onClick={ alertClickHandler }></Alert> }
+      
       <Name inputChange={ inputChangeHandler } nameValue={ userInfo.userName }></Name>
       <Age inputChange={ inputChangeHandler } ageValue={ userInfo.userAge }></Age>
       <Submit actionClick={ actionHandler } disabled={ false }></Submit>
+
       <div className={ `text-muted ${styles.help}` }>
         { JSON.stringify(userInfo) }
       </div>

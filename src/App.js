@@ -6,8 +6,10 @@ function App() {
   return (
     <div className={ `${styles.main} py-3` }>
       <div className={ `${styles.title}` }>
-        Name Tracker
+        <div className='mr-2'> Name Tracker </div>
+        <div id="total-count-portal"></div>
       </div>
+      <div id="error-message-portal" className='container'></div>
       <Core></Core>
     </div>
   );

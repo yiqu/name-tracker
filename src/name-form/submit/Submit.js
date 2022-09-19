@@ -8,13 +8,10 @@ const Submit = (props) => {
 
   return (
     <div className={ `${styles.parent}` }>
-      <div>
-        <button type="button" className={ `btn btn-secondary ${styles.reset}` }
-          onClick={ (e) => clickHandler(e, 'reset') }>Reset</button>
-        <button type="button" className="btn btn-primary" disabled={ props.disabled }
-          onClick={ (e) => clickHandler(e, 'submit') }>Submit</button>
-      </div>
-      
+      <button type="button" className={ `btn btn-secondary ${styles.reset}` }
+        onClick={ (e) => clickHandler(e, 'reset') }>Reset</button>
+      <button type="button" className="btn btn-primary" disabled={ props.disabled }
+        onClick={ (e) => clickHandler(e, 'submit') }>Submit</button>
     </div>
   );
 };
