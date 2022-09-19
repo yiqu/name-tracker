@@ -69,7 +69,7 @@ const NameForm = (props) => {
       <Name inputChange={ inputChangeHandler } nameValue={ userInfo.userName }></Name>
       <Age inputChange={ inputChangeHandler } ageValue={ userInfo.userAge }></Age>
       <Submit actionClick={ actionHandler } disabled={ false }></Submit>
-      <div className='text-muted'>
+      <div className={ `text-muted ${styles.help}` }>
         { JSON.stringify(userInfo) }
       </div>
     </form>
