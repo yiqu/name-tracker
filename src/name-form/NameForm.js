@@ -3,9 +3,19 @@ import Name from './name/Name';
 import Age from './age/Age';
 import Submit from './submit/Submit';
 import Alert from './alert-message/Alert';
-import { useState } from 'react';
+import { useState, useReducer } from 'react';
 
 const NameForm = (props) => {
+
+  // Use Reducer way
+  const initialState = {
+    userName: 'Cool Name',
+    userAge: 30,
+    hasError: false,
+    errorMsg: '',
+    submitDisabled: false
+  };
+  const [] = useReducer();
 
   const [userInfo, setUserInfo] = useState({
     userName: 'Kevin',
