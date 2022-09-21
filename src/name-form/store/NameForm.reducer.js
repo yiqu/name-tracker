@@ -6,6 +6,7 @@ export const userFormInitialState = {
   submitTime: 0,
   hasError: false,
   errorMsg: '',
+  lastErrMsgDate: 0,
   submitDisabled: false
 };
 
@@ -69,7 +70,8 @@ export const userFormReducer = (state, action) => {
       return {
         ...state,
         hasError: false,
-        errorMsg: undefined
+        errorMsg: undefined,
+        lastErrMsgDate: action.payload
       };
     }
     return {

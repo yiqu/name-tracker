@@ -25,7 +25,7 @@ const Core = () => {
   let totalCountDomNode = (<Parenthesis> {nameState.length} </Parenthesis>);
 
   return (
-    <div className={ `container ${styles.app}` }>
+    <div className={ `${styles.app}` }>
       <div className={ `${styles.main}` }>
         <NameForm onNameSubmit={ nameSubmitHandler }></NameForm>
         <NameList names={ nameState }></NameList>
