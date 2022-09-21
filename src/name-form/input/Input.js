@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useRef, useState } from 'react';
 import styles from './Input.module.scss';
-import { debounceTime, map, BehaviorSubject, switchMap, of, delay } from 'rxjs';
+import { debounceTime, map, BehaviorSubject, switchMap, of, delay, skip } from 'rxjs';
 
 const Input = (props) => {
 
@@ -17,8 +17,8 @@ const Input = (props) => {
   const inputPropRef = useRef(inputValue$);
 
   useEffect(() => {
-    inputPropRef.current.next(props.inputValue);
-  }, [inputPropRef, props.inputValue]);
+    inputPropRef.current.next(inputValue);
+  }, [inputPropRef, inputValue]);
 
   const changeHandler = (e) => {
     props.onInputChange(e.target?.value);
@@ -29,7 +29,9 @@ const Input = (props) => {
       debounceTime(700),
       // act as a HTTP call going out on every check
       switchMap((res) => {
-        setIsLoading(true);
+        setIsLoading((prev) => {
+          return true;
+        });
         console.log("HTTP call for: " + res);
         return of('').pipe(
           delay(1000),
@@ -37,7 +39,9 @@ const Input = (props) => {
             return (((res + '').trim() !== '') && ((+res) !== 0)) && res+'' !== 'kevin';
           }),
           map((valid) => {
-            setIsLoading(false);
+            setIsLoading((prev) => {
+              return false;
+            });
             setIsValid(valid);
           })
         );
@@ -53,10 +57,12 @@ const Input = (props) => {
     const sub = input$.subscribe();
     return (() => {
       setIsValid(true);
-      setIsLoading(false);
+      setIsLoading((prev) => {
+        return false;
+      });
       sub.unsubscribe();
     });
-  }, [props.inputValue]);
+  }, [inputValue]);
 
   return (
     <div className={ `form-group ${styles.input}` }>

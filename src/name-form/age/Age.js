@@ -17,9 +17,13 @@ const Age = (props) => {
     });
   };
 
+  const loadChangeHandler = (load) => {
+    props.onLoadingChange(load);
+  };
+
   return (
     <Input inputId={ id } inputName={ name } inputType={ type } inputValue={ props.ageValue }
-      onInputChange={ onAgeChangeHandler }>
+      onInputChange={ onAgeChangeHandler } onLoadChange={ loadChangeHandler }>
     </Input>
   );
 };

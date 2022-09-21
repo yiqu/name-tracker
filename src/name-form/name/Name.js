@@ -16,9 +16,13 @@ const Name = (props) => {
     });
   };
 
+  const loadChangeHandler = (load) => {
+    props.onLoadingChange(load);
+  };
+
   return (
     <Input inputId={ id } inputName={ name } inputType={ type } inputValue={ props.nameValue }
-      onInputChange={ nameChangeHandler }>
+      onInputChange={ nameChangeHandler } onLoadChange={ loadChangeHandler }>
     </Input>
     
   );

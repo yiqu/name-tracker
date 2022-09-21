@@ -3,95 +3,48 @@ import Name from './name/Name';
 import Age from './age/Age';
 import Submit from './submit/Submit';
 import Alert from './alert-message/Alert';
-import { useState, useReducer } from 'react';
+import { useReducer } from 'react';
+import * as fromNameFormActions from './store/NameForm.actions';
+import * as fromNameFormReducer from './store/NameForm.reducer';
 
 const NameForm = (props) => {
 
   // Use Reducer way
-  const initialState = {
-    userName: 'Cool Name',
-    userAge: 30,
-    hasError: false,
-    errorMsg: '',
-    submitDisabled: false
-  };
-  const [] = useReducer();
+  const [userFormState, dispatchFormStateAction] = useReducer(fromNameFormReducer.userFormReducer,
+    fromNameFormReducer.userFormInitialState);
 
-  const [userInfo, setUserInfo] = useState({
-    userName: 'Kevin',
-    userAge: 20,
-    hasError: false,
-    errorMsg: '',
-    submitDisabled: false
-  });
 
   const actionHandler = (btnId) => {
-    if (btnId === 'submit') {
-      if (userInfo.userAge > 0 && userInfo.userName.trim() !== '') {
-        setUserInfo((prevState) => {
-          return {
-            ...prevState,
-            hasError: false,
-            errorMsg: undefined
-          };
-        });
-        props.onNameSubmit({
-          userName: userInfo.userName,
-          userAge: userInfo.userAge,
-        });
-      } else {
-        setUserInfo((prevState) => {
-          return {
-            ...prevState,
-            hasError: true,
-            errorMsg: 'Check your inputs!'
-          };
-        });
-      }
-    } else if (btnId === 'reset') {
-      setUserInfo((prevState) => {
-        return {
-          userName: '',
-          userAge: ''
-        };
-      });
-    }
+    dispatchFormStateAction({ type: fromNameFormActions.USER_FORM_ACTION, payload: btnId });
+    props.onNameSubmit({
+      userName: userFormState.userName,
+      userAge: userFormState.userAge,
+    });
   };
 
   const inputChangeHandler = (input) => {
-    setUserInfo((prevState) => {
-      const state = {
-        ...prevState,
-        ...input,
-      };
-      const disableBtn = state.userName && ((+state.userAge) > 0);
-      return {
-        ...state,
-        submitDisabled: !disableBtn
-      };
-    });
+    dispatchFormStateAction({ type: fromNameFormActions.USER_FORM_CHANGE,
+      payload: input});
   };
 
   const alertClickHandler = () => {
-    setUserInfo((prevState) => {
-      return {
-        ...prevState,
-        hasError: false,
-      };
-    });
+    dispatchFormStateAction({ type: fromNameFormActions.USER_FORM_ERROR_DISMISS });
   };
 
+  const loadingHandler = (load) => {
+    console.log(load);
+  };
 
   return (
     <form className={ `${styles.main}` }>
-      { userInfo.hasError && <Alert message={ userInfo.errorMsg } onClick={ alertClickHandler }></Alert> }
+      { userFormState.hasError && <Alert message={ userFormState.errorMsg } onClick={ alertClickHandler }></Alert> }
       
-      <Name inputChange={ inputChangeHandler } nameValue={ userInfo.userName }></Name>
-      <Age inputChange={ inputChangeHandler } ageValue={ userInfo.userAge }></Age>
-      <Submit actionClick={ actionHandler } disabled={ false }></Submit>
+      <Name inputChange={ inputChangeHandler } nameValue={ userFormState.userName } onLoadingChange={ loadingHandler }></Name>
+      <Age inputChange={ inputChangeHandler } ageValue={ userFormState.userAge } onLoadingChange={ loadingHandler }></Age>
+      <Submit actionClick={ actionHandler } disabled={ userFormState.submitDisabled }></Submit>
 
       <div className={ `text-muted ${styles.help}` }>
-        { JSON.stringify(userInfo) }
+        { JSON.stringify(userFormState) }
       </div>
     </form>
   );
