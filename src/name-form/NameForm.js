@@ -16,10 +16,12 @@ const NameForm = (props) => {
 
   const actionHandler = (btnId) => {
     dispatchFormStateAction({ type: fromNameFormActions.USER_FORM_ACTION, payload: btnId });
-    props.onNameSubmit({
-      userName: userFormState.userName,
-      userAge: userFormState.userAge,
-    });
+    if (btnId === 'submit') {
+      props.onNameSubmit({
+        userName: userFormState.userName,
+        userAge: userFormState.userAge,
+      });
+    }
   };
 
   const inputChangeHandler = (input) => {
