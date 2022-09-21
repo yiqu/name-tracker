@@ -7,6 +7,8 @@ import React, { useEffect, useReducer, useState } from 'react';
 import ReactDOM from 'react-dom';
 import * as fromNameFormActions from './store/NameForm.actions';
 import * as fromNameFormReducer from './store/NameForm.reducer';
+import DateDisplay from '../shared/date-display/DateDisplay';
+
 
 const NameForm = (props) => {
 
@@ -28,6 +30,7 @@ const NameForm = (props) => {
       props.onNameSubmit({
         userName: userFormState.userName,
         userAge: userFormState.userAge,
+        date: new Date().getTime()
       });
     }
   };
@@ -55,7 +58,7 @@ const NameForm = (props) => {
       <React.Fragment>
         { domReady && ReactDOM.createPortal((
           <React.Fragment>
-            Last error: {userFormState.lastErrMsgDate}
+            <DateDisplay date={ userFormState.lastErrMsgDate } prefix={ `Last error date: ` }/>
           </React.Fragment>), document.getElementById('last-error-occured-node')) }
       </React.Fragment>
       

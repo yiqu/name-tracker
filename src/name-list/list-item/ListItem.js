@@ -1,4 +1,6 @@
 import styles from './ListItem.module.scss';
+import DateDisplay from '../../shared/date-display/DateDisplay';
+
 
 const NameItem = (props) => {
 
@@ -13,6 +15,7 @@ const NameItem = (props) => {
       <div>
         ID: { (props.nameInfo.id+'').slice(0,5) }
       </div>
+      <DateDisplay date={ props.nameInfo.date }></DateDisplay>
     </li>
   );
 };

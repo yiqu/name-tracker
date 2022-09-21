@@ -1,19 +1,25 @@
 import React from "react";
 import styles from './DateDisplay.module.scss';
+import withDateTransform from './DateTransform';
 
 const DateDisplay = (props) => {
 
-  const date = props.children;
-  console.log(date);
+  let content = null;
+
+  if (+props.date) {
+    content = (
+      <div className={ `${styles.parent}` }>
+        {props.prefix ?? ''} { props.children }
+      </div>
+    );
+  }
 
   return (
     <React.Fragment>
-      <div className={ `${styles.parent}` }>
-        { props.children }
-      </div>
+      { content }
     </React.Fragment>
   );
 
 };
 
-export default DateDisplay;
+export default withDateTransform(DateDisplay);
