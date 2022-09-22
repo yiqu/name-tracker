@@ -10,6 +10,7 @@
 - ```useEffect``` - Runs after every render, and will be triggered by the dependencies array. Clean up runs before useEffect.
 - ```useReducer``` - Managing complex states with initial state and dispatching actions to modify states.
 - ```useContext``` - Easy to pass states down to nested components without props chaining.
+- ```forwardRef``` - Turning a component into a ref() to call its functions from parent.
 
 ### Hook Rules
 
