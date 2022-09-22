@@ -1,14 +1,16 @@
 import styles from './NameList.module.scss';
 import NameItem from './list-item/ListItem';
+import { useContext } from "react";
+import NameListContext from "../core/store/names-context";
 
-const NameList = (props) => {
+const NameList = () => {
 
-  const names = props.names ?? [];
+  const nameListCtx = useContext(NameListContext);
 
   return (
     <div className={ `${styles.parent}` }>
       <ul className="list-group">
-        { names.map((name) => {
+        { nameListCtx.nameList.map((name) => {
           return <NameItem nameInfo={ name } key={ name.id }></NameItem>;
         }) }
       </ul>

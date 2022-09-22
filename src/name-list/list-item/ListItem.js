@@ -1,11 +1,14 @@
 import styles from './ListItem.module.scss';
 import DateDisplay from '../../shared/date-display/DateDisplay';
-
+import { useContext } from "react";
+import NameListContext from "../../core/store/names-context";
 
 const NameItem = (props) => {
 
+  const nameListCtx = useContext(NameListContext);
+
   return (
-    <li className={ `list-group-item ${styles.parent}` } >
+    <li className={ `list-group-item ${styles.parent}` } onClick={ nameListCtx.nameClickFn(props.nameInfo) }>
       <div>
         Name: { props.nameInfo.userName }
       </div>
