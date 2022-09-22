@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useImperativeHandle } from 'react';
 import styles from './Input.module.scss';
 import { debounceTime, map, BehaviorSubject, switchMap, of, delay, skip } from 'rxjs';
 
-const Input = (props) => {
+const Input = React.forwardRef((props, ref) => {
 
-  const inputRef = useRef(undefined);
+  const inputRef = useRef();
   const [isValid, setIsValid] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -36,7 +36,7 @@ const Input = (props) => {
         return of('').pipe(
           delay(1000),
           map((r) => {
-            return (((res + '').trim() !== '') && ((+res) !== 0)) && res+'' !== 'kevin';
+            return (((res + '').trim() !== '') && ((+res) > 0)) && res+'' !== 'kevin';
           }),
           map((valid) => {
             setIsLoading((prev) => {
@@ -64,6 +64,16 @@ const Input = (props) => {
     });
   }, [inputValue]);
 
+  const activate = () => {
+    inputRef.current.focus();
+  };
+
+  useImperativeHandle(ref, () => {
+    return {
+      activateFocus: activate,
+    };
+  });
+
   return (
     <div className={ `form-group ${styles.input}` }>
       <label htmlFor="userAge"> {inputName} </label> {inputRef.current?.value ? `(${inputRef.current?.value})` : ''} 
@@ -72,7 +82,7 @@ const Input = (props) => {
         onChange={ changeHandler } value={ inputValue } ref={ inputRef }/>
     </div>
   );
-};
+});
 
 export const getNewBSubject = (value) => {
   return new BehaviorSubject(value.inputValue);

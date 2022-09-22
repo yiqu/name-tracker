@@ -9,11 +9,17 @@ const NameList = () => {
 
   return (
     <div className={ `${styles.parent}` }>
-      <ul className="list-group">
-        { nameListCtx.nameList.map((name) => {
-          return <NameItem nameInfo={ name } key={ name.id }></NameItem>;
-        }) }
-      </ul>
+      { nameListCtx.nameList.length > 0 ?
+        <ul className="list-group">
+          { nameListCtx.nameList.map((name, index) => {
+            return <NameItem nameInfo={ name } key={ name.id }></NameItem>;
+          })}
+        </ul> :
+        <div className='d-flex justify-content-center'>
+          Name list is empty
+        </div>
+      }
+      
     </div>
   );
 };

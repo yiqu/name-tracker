@@ -5,21 +5,13 @@ export const userFormInitialState = {
   userAge: '30',
   submitTime: 0,
   hasError: false,
-  errorMsg: '',
+  errorMsg: undefined,
   lastErrMsgDate: 0,
   submitDisabled: false
 };
 
 export const userFormReducer = (state, action) => {
-    console.info(action);
-    if (action.type === fromUserFormActions.USER_FORM_SUBMIT) {
-      return {
-        ...state,
-        submitTime: new Date().getTime(),
-        hasError: false,
-        errorMsg: undefined
-      };
-    }
+    console.log(action);
     if (action.type === fromUserFormActions.USER_FORM_RESET) {
       return {
         ...state,
@@ -35,9 +27,7 @@ export const userFormReducer = (state, action) => {
       if (btnId === 'submit') {
         return {
           ...state,
-          submitTime: new Date().getTime(),
-          hasError: false,
-          errorMsg: undefined
+          submitTime: new Date().getTime()
         };
       } else if (btnId === 'reset') {
         return {

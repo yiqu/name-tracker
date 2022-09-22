@@ -3,14 +3,16 @@ import Name from './name/Name';
 import Age from './age/Age';
 import Submit from './submit/Submit';
 import Alert from './alert-message/Alert';
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useReducer, useState, useContext } from 'react';
 import ReactDOM from 'react-dom';
 import * as fromNameFormActions from './store/NameForm.actions';
 import * as fromNameFormReducer from './store/NameForm.reducer';
 import DateDisplay from '../shared/date-display/DateDisplay';
-
+import NameListContext from '../core/store/names-context';
 
 const NameForm = (props) => {
+
+  const nameListCtx = useContext(NameListContext);
 
   // Wait for DOM is painted to use portal
   const [domReady, setDomReady] = useState(false);
@@ -26,12 +28,16 @@ const NameForm = (props) => {
 
   const actionHandler = (btnId) => {
     dispatchFormStateAction({ type: fromNameFormActions.USER_FORM_ACTION, payload: btnId });
+
     if (btnId === 'submit') {
-      props.onNameSubmit({
-        userName: userFormState.userName,
-        userAge: userFormState.userAge,
-        date: new Date().getTime()
-      });
+      const inputValid = (+(userFormState.userAge) > 0) && ((''+userFormState.userName).trim() !== '');
+      if (inputValid) {
+        nameListCtx.nameSubmitFn({
+          userName: userFormState.userName,
+          userAge: userFormState.userAge,
+          date: new Date().getTime()
+        });
+      }
     }
   };
 
@@ -44,10 +50,6 @@ const NameForm = (props) => {
   const alertClickHandler = (dateClicked) => (event) => {
     console.log("dismiss alert", dateClicked, event);
     dispatchFormStateAction({ type: fromNameFormActions.USER_FORM_ERROR_DISMISS, payload: dateClicked });
-  };
-
-  const loadingHandler = (load) => {
-    console.log(load);
   };
 
 
@@ -63,9 +65,11 @@ const NameForm = (props) => {
       </React.Fragment>
       
 
-      <Name inputChange={ inputChangeHandler } nameValue={ userFormState.userName } onLoadingChange={ loadingHandler }></Name>
-      <Age inputChange={ inputChangeHandler } ageValue={ userFormState.userAge } onLoadingChange={ loadingHandler }></Age>
-      <Submit actionClick={ actionHandler } disabled={ userFormState.submitDisabled }></Submit>
+      <Name inputChange={ inputChangeHandler } nameValue={ userFormState.userName } submitDateChange={ userFormState.submitTime }></Name>
+
+      <Age inputChange={ inputChangeHandler } ageValue={ userFormState.userAge } submitDateChange={ userFormState.submitTime }></Age>
+
+      <Submit actionClick={ actionHandler }></Submit>
 
       <div className={ `text-muted ${styles.help}` }>
         { JSON.stringify(userFormState) }

@@ -1,12 +1,20 @@
 // eslint-disable-next-line no-unused-vars
 import styles from './Name.module.scss';
 import Input from '../input/Input';
+import { useEffect, useRef } from 'react';
 
 const Name = (props) => {
 
+  const nameRef = useRef();
   const id = 'userName';
   const name = 'Name';
   const type = 'text';
+
+  useEffect(() => {
+    if ((''+props.nameValue).trim() === '') {
+      nameRef.current.activateFocus();
+    }
+  }, [props.nameValue, props.submitDateChange]);
 
 
   const nameChangeHandler = (name) => {
@@ -16,13 +24,9 @@ const Name = (props) => {
     });
   };
 
-  const loadChangeHandler = (load) => {
-    props.onLoadingChange(load);
-  };
-
   return (
     <Input inputId={ id } inputName={ name } inputType={ type } inputValue={ props.nameValue }
-      onInputChange={ nameChangeHandler } onLoadChange={ loadChangeHandler }>
+      onInputChange={ nameChangeHandler } ref={ nameRef }>
     </Input>
     
   );

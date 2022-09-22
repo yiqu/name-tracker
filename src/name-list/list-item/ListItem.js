@@ -10,6 +10,8 @@ const NameItem = (props) => {
   return (
     <li className={ `list-group-item ${styles.parent}` } onClick={ nameListCtx.nameClickFn(props.nameInfo) }>
       <div>
+      </div>
+      <div>
         Name: { props.nameInfo.userName }
       </div>
       <div>
