@@ -46,7 +46,7 @@ const NameForm = (props) => {
       payload: input});
   };
 
-  // currying to get a variable from the function when clicking the Alert dom
+  // function curry currying to get a variable from the function when clicking the Alert dom
   const alertClickHandler = (dateClicked) => (event) => {
     console.log("dismiss alert", dateClicked, event);
     dispatchFormStateAction({ type: fromNameFormActions.USER_FORM_ERROR_DISMISS, payload: dateClicked });
